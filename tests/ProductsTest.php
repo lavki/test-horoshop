@@ -78,7 +78,7 @@ class ProductsTest extends TestCase
             ]
         ];
 
-        $this->assertEqualsCanonicalizing($firstElem, $result[0]);
+        $this->assertEqualsCanonicalizing($firstElem, $result['items'][0]);
     }
 
     public function testFindPagination_UnavailablePage(): void
@@ -135,7 +135,7 @@ class ProductsTest extends TestCase
                     'UAH' => 386586.8,
                     'USD' => 15076.89,
                     'EUR' => 13530.54,
-                    'RUB' => 978471.94
+                    'RUB' => 978064.61
                 ]
             ],
             [
@@ -163,7 +163,7 @@ class ProductsTest extends TestCase
                     'UAH' => 94648.73,
                     'USD' => 3691.31,
                     'EUR' => 3312.71,
-                    'RUB' => 239461.29
+                    'RUB' => 239461.28
                 ]
             ],
             [
@@ -175,8 +175,8 @@ class ProductsTest extends TestCase
                 'price' => [
                     'default' => 26456.04,
                     'UAH' => 26456.04,
-                    'USD' => 925.97,
-                    'EUR' => 1031.79,
+                    'USD' => 1031.79,
+                    'EUR' => 925.97,
                     'RUB' => 66933.79
                 ]
             ],
