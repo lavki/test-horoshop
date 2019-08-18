@@ -4,6 +4,10 @@ namespace Horoshop;
 
 use Horoshop\Exceptions\UnavailablePageException;
 
+/**
+ * Class ProductAggregator
+ * @package Horoshop
+ */
 class ProductAggregator
 {
     /**
@@ -128,7 +132,9 @@ class ProductAggregator
                 break;
         }
 
-        return (float) sprintf("%01.2f", ceil($price * 100) / 100);
+        $price = round(sprintf("%01.2f", ceil($price * 100) / 100), 2);
+
+        return $price;
     }
 
     /**
@@ -141,12 +147,19 @@ class ProductAggregator
     {
         if( $currency !== 'UAH' ) {
             $currencies = $this->getCurrencies();
-            $curr = $currencies[0]->rates;
+            $curr       = $currencies[0]->rates;
 
-            return (float) round(sprintf("%01.2f", ceil(($amount * $curr->$currency) * 100) / 100), 2);
+            if( !isset($curr->$currency) ) {
+                throw new UnavailableCurrencyException();
+            }
+
+            $price = sprintf("%01.2f", ceil(($amount * $curr->$currency) * 100) / 100);
+            $convertPrice = round($price, 2);
         } else {
-            return (float) round(sprintf("%01.2f", ceil($amount * 100) / 100), 2);
+            $convertPrice = $amount;
         }
+
+        return $convertPrice;
     }
 
     /**
