@@ -38,7 +38,7 @@ class ProductAggregator extends DiscountInterface
     /**
      * Read data from file and set $info property
      */
-    private function readFile()
+    public function readFile()
     {
         $data       = file_get_contents($this->filename);    // read data from file
         $this->info = json_decode($data, true ); // parse json
@@ -62,7 +62,7 @@ class ProductAggregator extends DiscountInterface
      */
     public function find(string $currency, int $page, int $perPage): string
     {
-        $pages = array_chunk($this->info['products'], $perPage);    // break the array into pieces
+        $pages = array_chunk($this->info['products'], $perPage); // break the array into pieces
 
         if( !array_key_exists($page, $pages) ) throw new UnavailablePageException();
 
@@ -70,6 +70,7 @@ class ProductAggregator extends DiscountInterface
         foreach( $pages[$page-1] as $productRaw ) {
             foreach( $this->info['categories'] as $category ) {
 
+                $this->setCurrencies();
                 if( $productRaw['category'] === $category['id'] ) { // if matched ids
                     // build needed data
                     $products[] = [

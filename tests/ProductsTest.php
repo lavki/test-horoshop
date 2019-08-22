@@ -2,8 +2,10 @@
 
 namespace Tests;
 
+use Horoshop\DataReader;
 use Horoshop\Exceptions\UnavailablePageException;
 use Horoshop\ProductAggregator;
+use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\TestCase;
 
 class ProductsTest extends TestCase
@@ -16,6 +18,20 @@ class ProductsTest extends TestCase
     public function setUp(): void
     {
         $this->productAggregator = new ProductAggregator('data.json');
+    }
+
+    // Тестирование того, что метод вызывается один раз
+    public function testreadFile()
+    {
+        $productAggregator = $this->getMockBuilder(ProductAggregator::class)
+            ->setConstructorArgs(['data.json'])
+            ->setMethodsExcept(['find'])
+            ->getMock();
+
+        $productAggregator->expects($this->once())
+            ->method('readFile');
+
+        $productAggregator->readFile();
     }
 
     public function testFindByUAH(): void
