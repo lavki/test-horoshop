@@ -8,7 +8,7 @@ use Horoshop\Exceptions\UnavailablePageException;
  * Class ProductAggregator
  * @package Horoshop
  */
-class ProductAggregator extends DiscountInterface
+class ProductAggregator extends DiscountInterface implements DataReaderInterface
 {
     use CurrencyConverter;
     use DiscountManager;
@@ -31,14 +31,15 @@ class ProductAggregator extends DiscountInterface
     {
         $this->filename = $filename;
 
-        $this->readFile();
+        $this->readFile($filename);
         $this->setCurrencies();
     }
 
     /**
-     * Read data from file and set $info property
+     * @param string $fileName
+     * @return string
      */
-    public function readFile()
+    public function readFile(string $fileName)
     {
         $data       = file_get_contents($this->filename);    // read data from file
         $this->info = json_decode($data, true ); // parse json

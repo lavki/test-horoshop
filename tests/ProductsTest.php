@@ -2,10 +2,8 @@
 
 namespace Tests;
 
-use Horoshop\DataReader;
 use Horoshop\Exceptions\UnavailablePageException;
 use Horoshop\ProductAggregator;
-use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\TestCase;
 
 class ProductsTest extends TestCase
@@ -31,7 +29,7 @@ class ProductsTest extends TestCase
         $productAggregator->expects($this->once())
             ->method('readFile');
 
-        $productAggregator->readFile();
+        $productAggregator->readFile('data.json');
     }
 
     public function testFindByUAH(): void
